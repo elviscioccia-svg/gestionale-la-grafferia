@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La Grafferia - Disponibilità</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 28px;
+      font-family: Arial, sans-serif;
+      background: #171717;
+      color: white;
+    }
+    header { text-align: center; margin-bottom: 28px; }
+    h1 { font-size: clamp(36px, 5vw, 64px); margin: 8px; }
+    #subtitle { color: #f4c36b; font-size: 22px; }
+    #products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 18px;
+      max-width: 1500px;
+      margin: auto;
+    }
+    .product {
+      background: #292929;
+      border-radius: 18px;
+      overflow: hidden;
+      text-align: center;
+      border: 2px solid #444;
+    }
+    .product img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      background: #444;
+    }
+    .product h2 { font-size: 25px; margin: 15px 8px; }
+    .status {
+      display: inline-block;
+      margin: 0 10px 18px;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 19px;
+      font-weight: bold;
+    }
+    .available { background: #176b3a; }
+    .soldout { background: #922e2e; }
+    .pending { background: #88631b; }
+    #message { text-align: center; color: #ddd; font-size: 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 id="shopName">La Grafferia</h1>
+    <div id="subtitle">Le nostre specialità</div>
+  </header>
+
+  <main id="products"></main>
+  <p id="message">Collegamento in corso...</p>
+
+  <script type="module">
+    import { initializeApp }
+      from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, doc }
+      from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAPN-Ka5ZiT3ZMrbKQy6co9FsIH9LCuKS0",
+      authDomain: "la-grafferia.firebaseapp.com",
+      projectId: "la-grafferia",
+      storageBucket: "la-grafferia.firebasestorage.app",
+      messagingSenderId: "321541824206",
+      appId: "1:321541824206:web:ba448c5b8c3e4573713a9f",
+      measurementId: "G-YJ2T7ZK04S"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const labels = {
+      available: "DISPONIBILE",
+      soldout: "ESAURITO",
+      pending: "DA CONFERMARE"
+    };
+
+    onSnapshot(collection(db, "products"), snapshot => {
+      const products = snapshot.docs.map(d => ({
+        id: d.id, ...d.data()
+      }));
+
+      products.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+
+      document.getElementById("products").innerHTML =
+        products.map(p => {
+          const status = labels[p.status] ? p.status : "pending";
+          const image = p.image || "";
+          return `
+            <article class="product">
+              ${image ? `<img src="${image}" alt="">` : ""}
+              <h2>${escapeHtml(p.name || "Prodotto")}</h2>
+              <span class="status ${status}">
+                ${labels[status]}
+              </span>
+            </article>`;
+        }).join("");
+
+      document.getElementById("message").textContent =
+        products.length ? "" : "Nessun prodotto inserito.";
+
+    }, error => {
+      document.getElementById("message").textContent =
+        "Errore di collegamento. Riprova più tardi.";
+      console.error(error);
+    });
+
+    onSnapshot(doc(db, "settings", "main"), snapshot => {
+      if (snapshot.exists() && snapshot.data().shopName) {
+        document.getElementById("shopName").textContent =
+          snapshot.data().shopName;
+      }
+    });
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;",
+        '"': "&quot;", "'": "&#39;"
+      })[c]);
+    }
+  </script>
+</body>
+</html>
