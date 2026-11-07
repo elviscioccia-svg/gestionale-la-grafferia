@@ -3,43 +3,92 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>La Grafferia - Amministrazione</title>
+<meta name="theme-color" content="#24140f">
+<title>La Grafferia — Area amministratore</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+:root{--cocoa:#24140f;--cocoa-2:#3b241b;--cream:#f7f0e4;--paper:#fffaf2;--gold:#c49a55;--gold-pale:#ead9b9;--ink:#30221c;--muted:#806f62;--line:rgba(73,48,33,.13);--shadow:0 16px 40px rgba(47,27,17,.09)}
 *{box-sizing:border-box}
-body{margin:0;padding:20px;font-family:Arial,sans-serif;background:#fff8f0;color:#29221e}
-h1{text-align:center;color:#8b3f16}
-.card{background:white;padding:16px;margin:12px 0;border-radius:15px;box-shadow:0 2px 9px #0002}
-input,button,select{font-size:16px;padding:12px;border-radius:9px;border:1px solid #ccc}
-input{width:100%;margin:7px 0}
-button{background:#8b3f16;color:white;border:0;cursor:pointer}
-.product{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.product strong{flex:1;min-width:130px}
-.product select{max-width:190px}
-.hidden{display:none}
-#message{text-align:center;color:#8b3f16}
+body{margin:0;min-height:100vh;background:var(--cream);color:var(--ink);font-family:"DM Sans",Arial,sans-serif}
+.topline{height:5px;background:linear-gradient(90deg,#8c6333,var(--gold-pale),#8c6333)}
+.hero{padding:30px 20px 34px;text-align:center;color:var(--paper);background:radial-gradient(ellipse at 50% -20%,#62412c 0%,var(--cocoa) 68%)}
+.eyebrow{color:var(--gold-pale);font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase}
+h1{margin:12px 0 4px;font-family:"Playfair Display",Georgia,serif;font-size:clamp(36px,6vw,54px);font-weight:600;letter-spacing:-.03em}
+.hero p{margin:0;color:#d9c8b5;font-size:13px;letter-spacing:.04em}
+.shell{width:min(100% - 32px,920px);margin:30px auto 60px}
+.card{border:1px solid rgba(89,59,38,.12);border-radius:16px;background:var(--paper);box-shadow:var(--shadow)}
+#login{max-width:440px;margin:42px auto;padding:30px}
+#login h2{margin:0 0 8px;color:var(--cocoa);font-family:"Playfair Display",Georgia,serif;font-size:27px}
+.login-copy{margin:0 0 22px;color:var(--muted);font-size:13px;line-height:1.6}
+.field-label{display:block;margin:14px 0 7px;color:#6f5b4b;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+input,button,select{font:inherit}
+input{width:100%;min-height:48px;padding:12px 14px;border:1px solid #ddcfbd;border-radius:9px;background:#fffdf9;color:var(--ink);outline:none}
+input:focus,select:focus-visible,button:focus-visible{outline:3px solid rgba(196,154,85,.38);outline-offset:2px}
+button{min-height:45px;padding:0 20px;border:1px solid var(--gold);border-radius:9px;background:var(--cocoa);color:#fff8ed;font-size:13px;font-weight:700;cursor:pointer;transition:background .2s,transform .2s}
+button:hover{background:#503020;transform:translateY(-1px)}
+#loginBtn{width:100%;margin-top:20px}
+#loginMessage{min-height:20px;margin:13px 0 0;color:#9b4b3f;font-size:12px;text-align:center}
+.hidden{display:none!important}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;padding:19px 22px}
+.toolbar strong{display:block;color:var(--cocoa);font-family:"Playfair Display",Georgia,serif;font-size:20px}
+.toolbar small{display:block;margin-top:4px;color:var(--muted);font-size:12px}
+#logoutBtn{min-height:39px;padding:0 15px;background:transparent;color:var(--cocoa);border-color:#d5c3a7}
+#logoutBtn:hover{background:#f1e6d4}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.summary-item{padding:15px 17px;border:1px solid var(--line);border-radius:12px;background:rgba(255,250,242,.8)}
+.summary-item span{display:block;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.summary-item strong{display:block;margin-top:5px;color:var(--cocoa);font-family:"Playfair Display",Georgia,serif;font-size:25px}
+#message{min-height:20px;margin:0 0 14px;color:#80663e;font-size:12px;text-align:center}
+#products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.product{display:flex;align-items:center;gap:13px;min-width:0;padding:13px;border:1px solid var(--line);border-radius:13px;background:var(--paper);box-shadow:0 5px 18px rgba(47,27,17,.045)}
+.product-thumb{width:68px;height:68px;flex:0 0 68px;overflow:hidden;border-radius:10px;background:#eadcc8}
+.product-thumb img{width:100%;height:100%;object-fit:cover}
+.product-info{flex:1;min-width:0}
+.product strong{display:block;margin-bottom:8px;color:var(--cocoa);font-family:"Playfair Display",Georgia,serif;font-size:16px;line-height:1.2}
+.product select{width:100%;min-height:38px;padding:7px 28px 7px 10px;border:1px solid #d8c8b1;border-radius:8px;background:#fffdf9;color:#473429;font-size:12px;font-weight:600}
+.product select:disabled{opacity:.55;cursor:wait}
+.footer-note{margin:25px 0 0;color:#978675;font-size:10px;letter-spacing:.1em;text-align:center;text-transform:uppercase}
+@media(max-width:640px){.shell{width:calc(100% - 24px);margin-top:20px}.toolbar{padding:15px;align-items:flex-start}.toolbar strong{font-size:17px}.summary{gap:7px}.summary-item{padding:12px 10px}.summary-item span{font-size:9px}.summary-item strong{font-size:22px}#products{grid-template-columns:1fr;gap:10px}.product{padding:11px}.product-thumb{width:62px;height:62px;flex-basis:62px}#login{padding:23px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
 </style>
 </head>
 <body>
+<div class="topline"></div>
+<header class="hero">
+  <div class="eyebrow">La Grafferia · Area riservata</div>
+  <h1>Gestione disponibilità</h1>
+  <p>Un controllo semplice, anche dal tuo telefono.</p>
+</header>
 
-<h1>🍩 La Grafferia</h1>
-<h2>Gestione disponibilità</h2>
-
-<div id="login" class="card">
-  <h3>Accesso amministratore</h3>
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-  <button id="loginBtn">Accedi</button>
-  <p id="loginMessage"></p>
-</div>
-
-<div id="panel" class="hidden">
-  <div class="card">
-    <strong>Sei nell'area amministratore</strong>
-    <button id="logoutBtn">Esci</button>
+<main class="shell">
+  <div id="login" class="card">
+    <h2>Benvenuto</h2>
+    <p class="login-copy">Accedi con le credenziali amministratore per aggiornare le disponibilità delle specialità.</p>
+    <label class="field-label" for="email">Email</label>
+    <input id="email" type="email" placeholder="nome@esempio.it" autocomplete="username">
+    <label class="field-label" for="password">Password</label>
+    <input id="password" type="password" placeholder="La tua password" autocomplete="current-password">
+    <button id="loginBtn">Accedi all'area riservata</button>
+    <p id="loginMessage" role="status" aria-live="polite"></p>
   </div>
-  <p id="message">Caricamento prodotti...</p>
-  <div id="products"></div>
-</div>
+
+  <section id="panel" class="hidden">
+    <div class="toolbar card">
+      <div><strong>Il tuo laboratorio</strong><small>Le modifiche vengono sincronizzate in tempo reale.</small></div>
+      <button id="logoutBtn">Esci</button>
+    </div>
+    <div class="summary" aria-label="Riepilogo disponibilità">
+      <div class="summary-item"><span>Disponibili</span><strong id="availableCount">—</strong></div>
+      <div class="summary-item"><span>Esauriti</span><strong id="soldoutCount">—</strong></div>
+      <div class="summary-item"><span>Da confermare</span><strong id="pendingCount">—</strong></div>
+    </div>
+    <p id="message" role="status" aria-live="polite">Caricamento prodotti...</p>
+    <div id="products"></div>
+    <p class="footer-note">La Grafferia · Gestione artigianale</p>
+  </section>
+</main>
 
 <script type="module">
 import { initializeApp } from
@@ -88,6 +137,20 @@ const labels = {
   available: "Disponibile",
   soldout: "Esaurito",
   pending: "Da confermare"
+};
+
+const illustrativeImages = {
+  "Graffa": "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=300&q=75",
+  "Cuoppo": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=300&q=75",
+  "Bomba": "https://images.unsplash.com/photo-1551024506-0d?auto=format&fit=crop&w=300&q=75",
+  "Cornetto": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=300&q=75",
+  "Cornetto Ischitano": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=300&q=75",
+  "Pangoccioli": "https://images.unsplash.com/photo-1608198093002-ad4e005484e8?auto=format&fit=crop&w=300&q=75",
+  "Cornetto Fritto": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=300&q=75",
+  "Crêpes": "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=300&q=75",
+  "Waffle": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=300&q=75",
+  "Pancake": "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=300&q=75",
+  "Churros": "https://images.unsplash.com/photo-1624371414361-e670edf4898d?auto=format&fit=crop&w=300&q=75"
 };
 
 document.getElementById("loginBtn").onclick = async () => {
@@ -168,17 +231,40 @@ function render(products) {
   const container = document.getElementById("products");
   container.innerHTML = "";
 
+  const visibleProducts = names
+    .map(name => products.find(p => p.name === name))
+    .filter(Boolean);
+
+  document.getElementById("availableCount").textContent =
+    visibleProducts.filter(p => p.status === "available").length;
+  document.getElementById("soldoutCount").textContent =
+    visibleProducts.filter(p => p.status === "soldout").length;
+  document.getElementById("pendingCount").textContent =
+    visibleProducts.filter(p => !labels[p.status] || p.status === "pending").length;
+
   names.forEach(name => {
     const product = products.find(p => p.name === name);
     if (!product) return;
 
     const card = document.createElement("div");
-    card.className = "card product";
+    card.className = "product";
+
+    const thumb = document.createElement("div");
+    thumb.className = "product-thumb";
+    const image = document.createElement("img");
+    image.src = illustrativeImages[name];
+    image.alt = name;
+    image.loading = "lazy";
+    thumb.appendChild(image);
+
+    const info = document.createElement("div");
+    info.className = "product-info";
 
     const title = document.createElement("strong");
-    title.textContent = "🍩 " + name;
+    title.textContent = name;
 
     const select = document.createElement("select");
+    select.setAttribute("aria-label", "Disponibilità " + name);
 
     Object.entries(labels).forEach(([value, label]) => {
       const option = document.createElement("option");
@@ -187,7 +273,7 @@ function render(products) {
       select.appendChild(option);
     });
 
-    select.value = product.status || "pending";
+    select.value = labels[product.status] ? product.status : "pending";
 
     select.onchange = async () => {
       select.disabled = true;
@@ -206,7 +292,8 @@ function render(products) {
       }
     };
 
-    card.append(title, select);
+    info.append(title, select);
+    card.append(thumb, info);
     container.appendChild(card);
   });
 

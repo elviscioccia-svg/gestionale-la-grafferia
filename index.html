@@ -1,65 +1,182 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>La Grafferia - Disponibilità</title>
+  <meta name="theme-color" content="#24140f">
+  <meta name="description" content="Scopri le specialità artigianali de La Grafferia e consulta le disponibilità aggiornate in tempo reale.">
+  <title>La Grafferia — Le nostre specialità</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      color-scheme: light;
+      --cocoa: #24140f;
+      --cocoa-soft: #3b241b;
+      --cream: #f7f0e4;
+      --paper: #fffaf2;
+      --gold: #c49a55;
+      --gold-light: #e2c58e;
+      --ink: #30221c;
+      --muted: #806f62;
+      --line: rgba(73, 48, 33, .13);
+      --shadow: 0 18px 45px rgba(47, 27, 17, .10);
+    }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      padding: 28px;
-      font-family: Arial, sans-serif;
-      background: #171717;
-      color: white;
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "DM Sans", Arial, sans-serif;
     }
-    header { text-align: center; margin-bottom: 28px; }
-    h1 { font-size: clamp(36px, 5vw, 64px); margin: 8px; }
-    #subtitle { color: #f4c36b; font-size: 22px; }
+    .topline { height: 5px; background: linear-gradient(90deg, #8c6333, var(--gold-light), #8c6333); }
+    .site-header {
+      position: relative;
+      overflow: hidden;
+      padding: 24px 22px 68px;
+      color: var(--paper);
+      text-align: center;
+      background:
+        linear-gradient(180deg, rgba(30, 16, 11, .78), rgba(30, 16, 11, .88)),
+        url("https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2000&q=85") center 48% / cover,
+        var(--cocoa);
+    }
+    .site-header::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold-light);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+    }
+    .brand-mark::before, .brand-mark::after { content: ""; width: 28px; height: 1px; background: var(--gold); }
+    h1 {
+      margin: 17px 0 7px;
+      color: #fffaf1;
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: clamp(42px, 7vw, 76px);
+      font-weight: 600;
+      letter-spacing: -.035em;
+      line-height: 1.05;
+    }
+    .subtitle { margin: 0; color: #eadcc8; font-size: clamp(14px, 2vw, 17px); letter-spacing: .04em; }
+    .header-note { margin: 25px auto 0; color: var(--gold-light); font-size: 10px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; }
+    .intro {
+      width: min(100% - 36px, 980px);
+      margin: -30px auto 38px;
+      position: relative;
+      padding: 20px 26px;
+      border: 1px solid rgba(196, 154, 85, .38);
+      border-radius: 14px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .intro p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+    .intro strong { color: var(--cocoa-soft); font-family: "Playfair Display", Georgia, serif; font-size: 18px; font-weight: 600; }
+    main { width: min(100% - 36px, 1440px); margin: 0 auto 60px; }
+    .section-heading { display: flex; align-items: center; gap: 16px; margin: 0 0 22px; }
+    .section-heading::before, .section-heading::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+    .section-heading span { color: #8b6a3e; font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
     #products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 18px;
-      max-width: 1500px;
-      margin: auto;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+      gap: 22px;
     }
     .product {
-      background: #292929;
-      border-radius: 18px;
       overflow: hidden;
-      text-align: center;
-      border: 2px solid #444;
+      border: 1px solid rgba(89, 59, 38, .12);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: 0 8px 24px rgba(47, 27, 17, .055);
+      text-align: left;
+      transition: transform .22s ease, box-shadow .22s ease;
     }
-    .product img {
-      width: 100%;
-      height: 170px;
-      object-fit: cover;
-      background: #444;
+    .product:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .product-media { position: relative; height: 205px; overflow: hidden; background: #e8d9c5; }
+    .product img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .product:hover img { transform: scale(1.045); }
+    .product-body { padding: 18px 19px 19px; }
+    .product h2 {
+      margin: 0 0 15px;
+      color: var(--cocoa);
+      font-family: "Playfair Display", Georgia, serif;
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1.25;
     }
-    .product h2 { font-size: 25px; margin: 15px 8px; }
     .status {
-      display: inline-block;
-      margin: 0 10px 18px;
-      padding: 10px 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 32px;
+      padding: 7px 11px;
+      border: 1px solid transparent;
       border-radius: 30px;
-      font-size: 19px;
-      font-weight: bold;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .09em;
     }
-    .available { background: #176b3a; }
-    .soldout { background: #922e2e; }
-    .pending { background: #88631b; }
-    #message { text-align: center; color: #ddd; font-size: 20px; }
+    .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .available { color: #286044; background: #e6f0e8; border-color: #c8ddcd; }
+    .soldout { color: #944b43; background: #f6e8e4; border-color: #e9cbc5; }
+    .pending { color: #8a682d; background: #f6efdf; border-color: #e9d8b2; }
+    #message {
+      min-height: 25px;
+      margin: 25px auto 0;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+    }
+    .site-footer { padding: 24px 18px 30px; border-top: 1px solid var(--line); color: #8c7a6b; text-align: center; font-size: 11px; letter-spacing: .08em; }
+    .site-footer span { color: #a77d43; }
+    @media (max-width: 600px) {
+      .site-header { padding: 22px 16px 58px; }
+      .intro { width: calc(100% - 28px); margin-bottom: 30px; padding: 17px 18px; }
+      main { width: calc(100% - 28px); }
+      #products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .product-media { height: 145px; }
+      .product-body { padding: 13px 12px 14px; }
+      .product h2 { font-size: 17px; margin-bottom: 11px; }
+      .status { padding: 6px 8px; font-size: 9px; letter-spacing: .035em; }
+    }
+    @media (max-width: 360px) { #products { grid-template-columns: 1fr; } .product-media { height: 190px; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
   </style>
 </head>
 <body>
-  <header>
+  <div class="topline"></div>
+  <header class="site-header">
+    <div class="brand-mark">Pasticceria artigianale</div>
     <h1 id="shopName">La Grafferia</h1>
-    <div id="subtitle">Le nostre specialità</div>
+    <p class="subtitle" id="subtitle">Le nostre specialità, preparate con passione</p>
+    <div class="header-note">Freschezza · Tradizione · Gusto</div>
   </header>
 
-  <main id="products"></main>
-  <p id="message">Collegamento in corso...</p>
+  <section class="intro" aria-label="Benvenuti">
+    <strong>Un piccolo momento di dolcezza.</strong>
+    <p>Consulta le disponibilità delle nostre specialità: la selezione si aggiorna in tempo reale.</p>
+  </section>
+
+  <main>
+    <div class="section-heading"><span>Le specialità del giorno</span></div>
+    <section id="products" aria-live="polite" aria-label="Disponibilità dei prodotti"></section>
+    <p id="message" role="status" aria-live="polite">Collegamento in corso...</p>
+  </main>
+
+  <footer class="site-footer">LA GRAFFERIA <span>✦</span> FATTO CON PASSIONE, SERVITO CON IL CUORE</footer>
 
   <script type="module">
     import { initializeApp }
@@ -86,6 +203,29 @@
       pending: "DA CONFERMARE"
     };
 
+    const illustrativeImages = {
+      graffa: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=900&q=80",
+      cuoppo: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
+      bomba: "https://images.unsplash.com/photo-1551024506-0d?auto=format&fit=crop&w=900&q=80",
+      cornetto: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80",
+      cornettoIschitano: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80",
+      pangoccioli: "https://images.unsplash.com/photo-1608198093002-ad4e005484e8?auto=format&fit=crop&w=900&q=80",
+      cornettoFritto: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80",
+      crepes: "https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=900&q=80",
+      waffle: "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=900&q=80",
+      pancake: "https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=900&q=80",
+      churros: "https://images.unsplash.com/photo-1624371414361-e670edf4898d?auto=format&fit=crop&w=900&q=80"
+    };
+
+    function imageFor(product) {
+      if (product.image) return product.image;
+      const key = String(product.name || "").toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z]/g, "");
+      const match = Object.keys(illustrativeImages).find(k => key.includes(k.toLowerCase()));
+      return illustrativeImages[match] || illustrativeImages.graffa;
+    }
+
     onSnapshot(collection(db, "products"), snapshot => {
       const products = snapshot.docs.map(d => ({
         id: d.id, ...d.data()
@@ -96,14 +236,16 @@
       document.getElementById("products").innerHTML =
         products.map(p => {
           const status = labels[p.status] ? p.status : "pending";
-          const image = p.image || "";
+          const image = imageFor(p);
           return `
             <article class="product">
-              ${image ? `<img src="${image}" alt="">` : ""}
-              <h2>${escapeHtml(p.name || "Prodotto")}</h2>
-              <span class="status ${status}">
-                ${labels[status]}
-              </span>
+              <div class="product-media">
+                <img src="${escapeHtml(image)}" alt="${escapeHtml(p.name || "Specialità artigianale")}" loading="lazy">
+              </div>
+              <div class="product-body">
+                <h2>${escapeHtml(p.name || "Prodotto")}</h2>
+                <span class="status ${status}">${labels[status]}</span>
+              </div>
             </article>`;
         }).join("");
 
