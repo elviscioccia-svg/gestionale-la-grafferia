@@ -152,6 +152,14 @@
       .product h2 { font-size: 17px; margin-bottom: 11px; }
       .status { padding: 6px 8px; font-size: 9px; letter-spacing: .035em; }
     }
+    @media (min-width: 1200px) {
+      main { width: min(100% - 72px, 1680px); }
+      #products { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+      .product-media { height: clamp(190px, 14vw, 260px); }
+      .product-body { padding: 20px 22px 22px; }
+      .product h2 { font-size: clamp(21px, 1.5vw, 27px); }
+      .status { font-size: 11px; }
+    }
     @media (max-width: 360px) { #products { grid-template-columns: 1fr; } .product-media { height: 190px; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
   </style>
@@ -206,7 +214,7 @@
     const illustrativeImages = {
       graffa: "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&fit=crop&w=900&q=80",
       cuoppo: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80",
-      bomba: "https://images.unsplash.com/photo-1551024506-0d?auto=format&fit=crop&w=900&q=80",
+      bomba: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Bomboloni.jpg",
       cornetto: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80",
       cornettoIschitano: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=900&q=80",
       pangoccioli: "https://images.unsplash.com/photo-1608198093002-ad4e005484e8?auto=format&fit=crop&w=900&q=80",
@@ -240,7 +248,7 @@
           return `
             <article class="product">
               <div class="product-media">
-                <img src="${escapeHtml(image)}" alt="${escapeHtml(p.name || "Specialità artigianale")}" loading="lazy">
+                <img src="${escapeHtml(image)}" alt="${escapeHtml(p.name || "Specialità artigianale")}" loading="lazy" onerror="this.onerror=null;this.src=&#39;https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&amp;fit=crop&amp;w=900&amp;q=80&#39;">
               </div>
               <div class="product-body">
                 <h2>${escapeHtml(p.name || "Prodotto")}</h2>
