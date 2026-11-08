@@ -226,7 +226,6 @@
     };
 
     function imageFor(product) {
-      if (product.image) return product.image;
       const key = String(product.name || "").toLowerCase()
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         .replace(/[^a-z]/g, "");
