@@ -264,7 +264,19 @@
     display: none !important;
   }
 }
-  </style>
+  .unavailable-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e00000;
+  font-size: 110px;
+  font-weight: 900;
+  text-shadow: 0 2px 5px white;
+  pointer-events: none;
+  z-index: 5;
+}</style>
 </head>
 <body>
   <div class="topline"></div>
@@ -350,6 +362,7 @@
             <article class="product">
               <div class="product-media">
                 <img src="${escapeHtml(image)}" alt="${escapeHtml(p.name || "Specialità artigianale")}" loading="lazy" onerror="this.onerror=null;this.src=&#39;https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&amp;fit=crop&amp;w=900&amp;q=80&#39;">
+              ${status === "soldout" ? '<span class="unavailable-mark">✕</span>' : ""}
               </div>
               <div class="product-body">
                 <h2>${escapeHtml(p.name || "Prodotto")}</h2>
