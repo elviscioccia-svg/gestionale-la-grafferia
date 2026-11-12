@@ -343,7 +343,7 @@
       const key = String(product.name || "").toLowerCase()
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         .replace(/[^a-z]/g, "");
-      const match = Object.keys(illustrativeImages).find(k => key.includes(k.toLowerCase()));
+      const match = Object.keys(illustrativeImages).sort((a, b) => b.length - a.length).find(k => key.includes(k.toLowerCase()));
       return illustrativeImages[match] || illustrativeImages.graffa;
     }
 
