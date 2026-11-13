@@ -160,6 +160,17 @@
       .product h2 { font-size: clamp(21px, 1.5vw, 27px); }
       .status { font-size: 40px; }
     }
+    @media (min-width: 700px) {
+  .product-media {
+    height: 90px !important;
+  }
+  .product h2 {
+    font-size: 27px !important;
+  }
+  .status {
+    font-size: 20px !important;
+  }
+}
     @media (max-width: 360px) { #products { grid-template-columns: 1fr; } .product-media { height: 190px; } }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
     @media (min-width: 700px) {
