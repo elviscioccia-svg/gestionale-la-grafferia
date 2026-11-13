@@ -365,7 +365,7 @@
             <article class="product">
               <div class="product-media">
                 <img src="${escapeHtml(image)}" alt="${escapeHtml(p.name || "Specialità artigianale")}" loading="lazy" onerror="this.onerror=null;this.src=&#39;https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?auto=format&amp;fit=crop&amp;w=900&amp;q=80&#39;">
-              ${p.status === "soldout" ? '<span class="unavailable-mark">✕</span>' : ""}
+              ${status === "soldout" ? '<span class="unavailable-mark">✕</span>' : ""}
               </div>
               <div class="product-body">
                 <h2>${escapeHtml(p.name || "Prodotto")}</h2>
