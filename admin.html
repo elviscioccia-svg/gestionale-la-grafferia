@@ -215,7 +215,13 @@ function startProducts() {
       id: d.id,
       ...d.data()
     }));
-
+if (!products.some(p => p.name === "Yogurt")) {
+  await setDoc(doc(db, "products", slug("Yogurt")), {
+    name: "Yogurt",
+    status: "pending"
+  });
+  return;
+}
     render(products);
   }, error => {
     document.getElementById("message").textContent =
